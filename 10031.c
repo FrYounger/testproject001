@@ -29,26 +29,34 @@ struct stud_node
 };
 void main()
 {
-	struct stud_node stud, *head,*tail, *p;
-	int num, score, i=0;
+	struct stud_node *head,*tail, *p;
+	int num, score, start=1, i=0;
 	char name[20];
 	int size = sizeof(struct stud_node);
 
 	head=tail=NULL;
 	scanf("%d", &num);	
-	head=tail=&stud;
   	while(num != 0)
   	{
+		if(start==0)
+		{
+			tail->next=(struct stud_node *)malloc(size);
+			tail=tail->next;
+		}
+		if(start==1)
+		{
+			head=tail=(struct stud_node *)malloc(size);
+		}
 		tail->num=num;
 		scanf("%s", name);
 		for(i=0;i<=19;i++)
 			tail->name[i]=name[i];
 		scanf("%d", &score);
 		tail->score=score;
-		tail=tail->next;
+		tail->next=NULL;
 		scanf("%d", &num);
+		start=0;
 	}
-	tail=NULL;
 	for(p=head; p!=NULL; p=p->next)  
 		printf("%d %s %d\n", p->num,p->name,p->score);
 }
